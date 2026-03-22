@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Course</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"></script>
+<body>
+
+<div class="navbar">
+  <h1>CourseHub.com</h1>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="dashboard.html">My Courses</a>
+  </div>
+</div>
+
+<div class="form-container">
+  <h2>Create Course</h2>
+  <input id="courseName" type="text" placeholder="Course Title">
+  <input id="instructor" type="text" placeholder="Instructor Name">
+  <input id="duration" type="text" placeholder="Duration (Months or Hours)">
+  <input id="price" type="number" placeholder="Price">
+  <button onclick="createCourse()">Create</button>
+</div>
+
+<!-- Script -->
+
+<script>
+  async function createCourse(){
+    const courseName = document.getElementById("courseName").value
+    const instructor = document.getElementById("instructor").value
+    const duration = document.getElementById("duration").value
+    const price = document.getElementById("price").value
+
+    await axios.post("http://localhost:4000/coursehub.com/createCourse", {
+      courseName: courseName,
+      instructor: instructor,
+      duration: duration,
+      price: price
+    })
+
+    alert("Course Added!")
+
+  }
+</script>
+</body>
+</html>
