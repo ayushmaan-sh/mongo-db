@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>CourseHub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"></script>
+
+<body>
+
+  <div class="navbar">
+    <h1>CourseHub.com</h1>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="dashboard.html">My Courses</a>
+      <a href="create.html">Create</a>
+      <a id="loginBtn" href="login.html">Login</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2>Available Courses</h2>
+
+    <div class="grid">
+      <div class="card">
+        <h3>JavaScript Mastery</h3>
+        <p>Learn JS from basics to advanced</p>
+        <button>Buy Course</button>
+      </div>
+
+      <div class="card">
+        <h3>Node.js Backend</h3>
+        <p>Build scalable backend systems</p>
+        <button>Buy Course</button>
+      </div>
+
+      <div class="card">
+        <h3>MongoDB Bootcamp</h3>
+        <p>Database mastery</p>
+        <button>Buy Course</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script -->
+
+  <script>
+
+    async function main() {
+      try {
+        const username = localStorage.getItem("email")
+        const token = localStorage.getItem("token")
+
+        await axios.get("http://localhost:4000/coursehub.com/mycourses",{
+          headers:{
+            token: token
+          }
+        })
+
+        if (username) {
+          const loginBtn = document.getElementById("loginBtn")
+          loginBtn.innerHTML = username
+          loginBtn.href = "dashboared.html"
+        } else {
+          alert("Something went wrong! Check it.")
+        }
+
+      } catch (error) {
+        console.log(error);
+        
+        alert("Unauthorised!")
+      }
+    }
+
+main()
+  </script>
+</body>
+
+
+</html>
