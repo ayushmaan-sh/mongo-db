@@ -1,27 +1,32 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
-const ObjectId = Schema.ObjectId
 
-//User Data
 const User = new Schema({
     email: {type: String, unique: true},
-    password: String,
-    name: String
+    username: String,
+    password: String
 })
 
-//Todo Data
-const Todo = new Schema({
-    title: String,
+const MyCourses = new Schema({
+    courseName: String,
+    instructor: String,
     done: Boolean,
-    userId: ObjectId
+    userId: String
 })
 
-//Adding data into collections
-const UserModel = mongoose.model('users', User)
-const TodoModel = mongoose.model('todos', Todo)
+const CreateCourse = new Schema({
+    courseName: String,
+    instructor: String,
+    duration: String,
+    price: Number
+})
 
-//exporting data to the backend
+const UserModel = mongoose.model("users", User)
+const MyCoursesModel = mongoose.model("mycourses", MyCourses)
+const CreateCourseModel = mongoose.model("createcourses", CreateCourse)
+
 module.exports = {
     UserModel,
-    TodoModel
+    MyCoursesModel,
+    CreateCourseModel
 }
