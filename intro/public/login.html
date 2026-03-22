@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Login - CourseHub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"></script>
+
+<script>
+  async function Login() {
+      const email = document.getElementById("email").value
+      const password = document.getElementById("password").value
+
+      const response = await axios.post('http://localhost:4000/coursehub.com/signin', {
+        email: email,
+        password: password
+      })
+
+      localStorage.setItem("token", response.data.token)
+      localStorage.setItem("email", email)
+      alert("Logged In")      
+      window.location.href = "index.html"
+  }
+</script>
+
+<body>
+  <div class="form-container">
+    <h2>Login</h2>
+    <input id="email" type="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
+    <button onclick="Login()">Sign In</button>
+    <p style="text-align:center; margin-top:10px;">
+      Don't have an account? <a href="signup.html">Sign Up</a>
+    </p>
+  </div>
+
+</body>
+
+</html>
