@@ -45,7 +45,7 @@ app.post("/signin", async(req, res)=>{
     const password = req.body.password
 
     try {       
-        const user = UserModel.findOne({
+        const user = await UserModel.findOne({
             username: username,
             password: password
         })
@@ -67,6 +67,34 @@ app.post("/signin", async(req, res)=>{
         })
     }
 
+})
+
+const auth = (req, res, next)=> {
+    const token = req.headers.token
+
+    try {
+        const decodedInformation = jwt.verify(token, JWT_SECRET)
+        if(decodedInformation){
+            req.username = decodedInformation.username
+            next()
+        } else {
+            res.json({
+                message: "Invalid token. Try again!"
+            })
+        }
+    } catch (error) {
+        res.json({
+            error: error,
+            message: "Something went wrong!"
+        })
+    }
+
+}
+
+app.get("/home", auth, (req, res)=>{
+    res.json({
+        message: `Welcome ${req.username}!`
+    })
 })
 
 
