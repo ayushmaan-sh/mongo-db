@@ -12,16 +12,33 @@ mongoose.connect("mongodb+srv://ayushmaanshukla274:Ayush24@cluster0.2lqbam1.mong
 app.use(express.json())
 
 app.post("/signup", async(req, res)=>{
+
     const username = req.body.username
     const password = req.body.password
 
-    const checkExistingUser = await UserModel.findOne({username})
-
-    if(!checkExistingUser){
-        res.json("Signed up")
-    } else {
-        res.json("User already in data.")
+    try {
+        const checkExistingUser = await UserModel.findOne({username})
+    
+        if(!checkExistingUser){
+            UserModel.create({
+                username: username,
+                password: password
+            })
+    
+            res.json({
+                message: "You are signed up."
+            })
+        } else {
+            res.json("User already in data. Proceed to signin")
+        }
+        
+    } catch (error) {
+        res.json({
+            error: error,
+            message: "Something went wrong!"
+        })
     }
 })
+
 
 app.listen(3000)
